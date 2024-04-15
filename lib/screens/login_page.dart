@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:api_rest_flutter/services/api_service.dart';
+import 'package:api_rest_flutter/utils/sec_storage.dart';
+
 
 class Login extends StatefulWidget {
   const Login({super.key, required this.title});
@@ -22,12 +24,32 @@ class _LoginState extends State<Login> {
     // resultado e booleano
     return results;
   }
+  
+  
+
+Future<void> verifica_auth() async {
+    bool isAuthenticated = await SecureStorage().verifySecureData("apikey");
+    if (isAuthenticated) {
+      Future.delayed(const Duration(seconds: 1 ), () {
+        Navigator.pushReplacementNamed(context, "/adm");
+
+      });
+    } 
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    verifica_auth();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text("login"),
       ),
       body: Form(
         key: _formKey,

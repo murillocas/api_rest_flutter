@@ -38,6 +38,7 @@ class _AdmPageState extends State<AdmPage> {
 
   getData() async {
     items = await RemoteService().getItems();
+    print("get data foi chamado");
    
     if (items != null) {
       setState(() {
@@ -45,13 +46,40 @@ class _AdmPageState extends State<AdmPage> {
       });
     }
   }
+  test(){
+
+  }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('página de administração'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.account_circle_outlined),
+            tooltip: 'ir para a página home',
+            onPressed: () {
+             Navigator.pushNamed(context, "/");
+            },
+          ),
+
+        ],
+      ),
       resizeToAvoidBottomInset: false,
-  
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async{
+         
+          var msg =  await Navigator.pushNamed(context, "/edit",arguments:{ "create": true});
+                   print(msg);
+                   if(msg == "atualizar"){
+                    getData();
+                   }
+        },
+        tooltip: 'Increment Counter',
+        child: const Icon(Icons.add),
+      ),
       body: Center(
         child: Visibility(
           visible: isLoaded,
@@ -73,14 +101,21 @@ class _AdmPageState extends State<AdmPage> {
                 final item = items![index];
                 return ListTile(
                   title: Text(item.nameitem),
-                  onTap: () {
-                    Navigator.pushNamed(context, "/edit", arguments: item,);
+                  onTap: () async {
+                   var msg = await Navigator.pushNamed(context, "/edit", arguments:{ 'item': item, "create": false} );
+                   print(msg);
+                   if(msg == "atualizar"){
+                    getData();
+                   }
                   },
                   // Você pode adicionar mais informações do item aqui, se necessário
                 );
               },
             ),
+            
           ),
+        
+
          
         ),
       ),

@@ -20,7 +20,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    //fetch data from API
     getData();
   }
 
@@ -38,6 +37,20 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Bem vindo'),
+        automaticallyImplyLeading: false,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.account_circle_outlined),
+            tooltip: 'realizar o login',
+            onPressed: () {
+             Navigator.pushNamed(context, "/login");
+            },
+          ),
+
+        ],
+      ),
       resizeToAvoidBottomInset: false,
       body: Center(
         child: Visibility(
@@ -59,7 +72,8 @@ class _HomePageState extends State<HomePage> {
                 final item = items![index];
                 return ListTile(
                   title: Text(item.nameitem),
-                  // Você pode adicionar mais informações do item aqui, se necessário
+
+
                 );
               },
             ),
