@@ -120,120 +120,155 @@ redirecionar (){
         title: Text("atualização"),
       ),
       body: Center(
-        child:  Visibility(
-          visible: isLoaded,
-          replacement: const CircularProgressIndicator(),
-          child: SizedBox.square( 
-          dimension: 600,
-            child: Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                      child: TextFormField(
-                        controller: namecontroller,
-                        decoration: const InputDecoration(
-                        border: OutlineInputBorder(), labelText: "nome do item"),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
-                          }
-                          return null;
-                        },
+        child:  SingleChildScrollView(
+          
+          child: Visibility(
+            visible: isLoaded,
+            replacement: const CircularProgressIndicator(),
+            child: SizedBox.square( 
+            dimension: 600,
+              child: Form(
+                key: _formKey,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                        child: TextFormField(
+                          controller: namecontroller,
+                          decoration: const InputDecoration(
+                          border: OutlineInputBorder(), labelText: "nome do item"),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your email';
+                            }
+                            return null;
+                          },
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                      child: TextFormField(
-                        controller: precoController,
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(), labelText: "preço"),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          return null;
-                        },
+                      Padding(
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                        child: TextFormField(
+                          controller: precoController,
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(), labelText: "preço"),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            return null;
+                          },
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                      child: TextFormField(
-                        controller: qtdController,
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(), labelText: "quantidade"),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          return null;
-                        },
+                      Padding(
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                        child: TextFormField(
+                          controller: qtdController,
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(), labelText: "quantidade"),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            return null;
+                          },
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                      child: TextFormField(
-                        controller: descricaocontroller,
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(), labelText: "descrição"),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          return null;
-                        },
+                      Padding(
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                        child: TextFormField(
+                          controller: descricaocontroller,
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(), labelText: "descrição"),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            return null;
+                          },
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                      child: TextFormField(
-                        controller: categorycontroller,
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(), labelText: "categoria"),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          return null;
-                        },
+                      Padding(
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                        child: TextFormField(
+                          controller: categorycontroller,
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(), labelText: "categoria"),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            return null;
+                          },
+                        ),
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Visibility(
-                          visible: !criacao,
-                          child: Expanded(
-                            child: 
-                              Padding(
-                               
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Visibility(
+                            visible: !criacao,
+                            child: Expanded(
+                              child: 
+                                Padding(
+                                 
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
+                                  child: Center(
+                                    child: ElevatedButton(
+                              
+                                      onPressed: () async {
+                                        if (_formKey.currentState!.validate()) {
+                                          print("forms preenchido ");
+                                          atualizarobjeto();
+                                        if (await updateitem(item!)) {
+                                          print("forms enviado para atualizar ");
+                            
+                                          Navigator.pop(context,"atualizar");
+                                        }else{
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('O item não foi atualizado')),
+                                        );
+                                        }
+                                          // Navigate the user to the Home page
+                                          
+                                        } else {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(content: Text('Please fill input')),
+                                          );
+                                        }
+                                      },
+                                      child: const Text('atualizar'),
+                                    ),
+                                  ),
+                                ),
+                              
+                            ),
+                          ),Visibility(
+                            visible: !criacao,
+                            child: Expanded(
+                              child: Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
                                 child: Center(
                                   child: ElevatedButton(
-                            
                                     onPressed: () async {
                                       if (_formKey.currentState!.validate()) {
-                                        print("forms preenchido ");
-                                        atualizarobjeto();
-                                      if (await updateitem(item!)) {
-                                        print("forms enviado para atualizar ");
-                          
-                                        Navigator.pop(context,"atualizar");
-                                      }else{
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(content: Text('O item não foi atualizado')),
-                                      );
-                                      }
+                                        
+                                        
+                                        if (await deletaritem(item!)) {
+                                          Navigator.pop(context,"atualizar");
+                                        }else{
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('O item não foi deletado')),
+                                        );
+                                        }
                                         // Navigate the user to the Home page
                                         
                                       } else {
@@ -242,85 +277,53 @@ redirecionar (){
                                         );
                                       }
                                     },
-                                    child: const Text('atualizar'),
+                                    child: const Text('deletar'),
                                   ),
                                 ),
                               ),
-                            
+                            ),
                           ),
-                        ),Visibility(
-                          visible: !criacao,
-                          child: Expanded(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
-                              child: Center(
-                                child: ElevatedButton(
-                                  onPressed: () async {
-                                    if (_formKey.currentState!.validate()) {
-                                      
-                                      
-                                      if (await deletaritem(item!)) {
-                                        Navigator.pop(context,"atualizar");
-                                      }else{
+                          Visibility(
+                            visible: criacao,
+                            child: Expanded(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
+                                child: Center(
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      print("click no criar");
+                                      if (_formKey.currentState!.validate()) {
+                                         print("click no criar no validate");
+                                         print(item);
+                                          atualizarobjeto();
+          
+                                        
+                                        if (await createitem(item!)) {
+                                          Navigator.pop(context,"atualizar");
+                                        }else{
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('O item não foi criado')),
+                                        );
+                                        }
+                                        // Navigate the user to the Home page
+                                        
+                                      } else {
                                         ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(content: Text('O item não foi deletado')),
-                                      );
+                                          const SnackBar(content: Text('Please fill input')),
+                                        );
                                       }
-                                      // Navigate the user to the Home page
-                                      
-                                    } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(content: Text('Please fill input')),
-                                      );
-                                    }
-                                  },
-                                  child: const Text('deletar'),
+                                    },
+                                    child: const Text('criar'),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        Visibility(
-                          visible: criacao,
-                          child: Expanded(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
-                              child: Center(
-                                child: ElevatedButton(
-                                  onPressed: () async {
-                                    print("click no criar");
-                                    if (_formKey.currentState!.validate()) {
-                                       print("click no criar no validate");
-                                       print(item);
-                                        atualizarobjeto();
-
-                                      
-                                      if (await createitem(item!)) {
-                                        Navigator.pop(context,"atualizar");
-                                      }else{
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(content: Text('O item não foi criado')),
-                                      );
-                                      }
-                                      // Navigate the user to the Home page
-                                      
-                                    } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(content: Text('Please fill input')),
-                                      );
-                                    }
-                                  },
-                                  child: const Text('criar'),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
